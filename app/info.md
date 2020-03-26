@@ -23,28 +23,28 @@ The forecasting approach can be summarised as follows:
 The following values are specified by the user to tailor the model to a particular scenario. Model parameters are set with sensible defaults while a starting date and count for the forecast are required inputs.
 
 * **Date of the reference admission**
-  - *Required*
+  - Default: today's date
 * **Number of admissions on that date**
-  - *Required*
-* **Duration of the forecast**, i.e. how far ahead to predict
+  - Default: 1
+* **Duration of the forecast**, i.e. how far ahead to predict.
   - Default: 14 days
 * **Assumed reporting level in %** 
-  - Default: 100%, i.e. all admissions reported
-* **Assumed doubling time**, in days. This is the estimated time taken for the epidemic to double in size, and serves as a measure of transmission intensity.
+  - Default: 100%, i.e. all admissions reported.
+* **Assumed doubling time, in days**. This is the estimated time taken for the epidemic to double in size, and serves as a measure of transmission intensity.
   - Default: *look for sensible number from literature*
-* **Uncertainty in doubling time**, in days. Since the doubling time is an estimated parameter, it is necessary to incorporate the potential error associated with it. Lower / upper bound will be doubling time +/- this value. 
+* **Uncertainty in doubling time, in days**. Since the doubling time is an estimated parameter, it is necessary to incorporate the potential error associated with it. Lower / upper bound will be doubling time +/- this value. 
   - Default: *?*
 * **Number of simulations** to incorporate uncertainty in the duration of stay.
-  Default: 50 simulated durations of stay per admission
+  - Default: 50 simulated durations of stay per admission.
 
 ### Pre-set model parameters
 
 Two options for duration of hospitalisation are provided to match the results of [Zhou et al 2020](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30566-3/fulltext):
 
-* Long-stay: discretised Weibull (shape:*?*, scale:*?*) to aim for a median of 11
-    days, IQR 7-14
-* Short-stay: discretised Weibull (shape:2, scale:10) to aim for a median of 8
-    days, IQR 4-12
+* Long-stay: discretised Weibull (shape: 2, scale: 13) to aim for a median of 11
+    days, IQR 7-14.
+* Short-stay: discretised Weibull (shape: 2, scale: 10) to aim for a median of 8
+    days, IQR 4-12.
 
 These distributions may not be appropriate in some settings, and the user should take this into account when interpreting a forecast.
 
