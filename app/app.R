@@ -1,9 +1,9 @@
-# this provides a template for making CMMID-branded shiny apps
-# key points:
-#  - organized as a navbar page
-#  - show audience something first: sidebar layouts are all controls-right
-#    which means when viewed on mobile, the plot appears first rather than the controls
-#  - the notes markdown is the place to document any long form details.
+## This provides a template for making CMMID-branded shiny apps
+## key points:
+##  - organized as a navbar page
+##  - show audience something first: sidebar layouts are all controls-right
+##    which means when viewed on mobile, the plot appears first rather than the controls
+##  - the notes markdown is the place to document any long form details.
 
 library(shiny)
 
@@ -12,34 +12,68 @@ apptitle <- "Hospital Bed Occupancy Projections"
 source("old_faithful.R")
 source("exp_growth.R")
 
-# Define UI for application that draws a histogram
+## Define UI for application that draws a histogram
 ui <- navbarPage(
     title = div(
-        a(img(src="cmmid_newlogo.svg", height="45px"), href="https://cmmid.github.io/"), span(apptitle, style="line-height:45px")
+        a(img(src="cmmid_newlogo.svg", height="45px"),
+          href="https://cmmid.github.io/"),
+        span(apptitle, style="line-height:45px")
     ),
     windowTitle = apptitle,
     theme = "styling.css",
     position="fixed-top", collapsible = TRUE,
-    tabPanel("Results", sidebarLayout(position = "right",
+    tabPanel("Results", sidebarLayout(position = "left",
       sidebarPanel(
-        numericInput("R",
-          "R:",
-          min = 0.5,
-          max = 10,
-          value = 2
+        dateInput("admission_date",
+          "Date of admission:"
         ),
-        numericInput("SI",
-                     "serial interval:",
+        numericInput("number_admissions",
+                     "Number of admissions on that date:",
                      min = 1,
+                     max = 10000,
+                     value = 1
+        ),
+        numericInput("assumed_reporting",
+                     "Reporting rate (%):",
+                     min = 1,
+                     max = 100,
+                     value = 100
+        ),
+        numericInput("doubling_time",
+                     "Assumed doubling time (days):",
+                     min = 0.5,
                      max = 10,
-                     value = 5
+                     value = 2
+        ),
+        numericInput("uncertainty_doubling_time",
+                     "Uncertainty in doubling time (days):",
+                     min = 0,
+                     max = 5,
+                     value = 1
+        ),
+        radioButtons(inputId = "distribution_duration",
+                     label = "Distribution of duration of stay", 
+                     choices = c("non-critical hospitalization","critical hospitalization")
+        ),
+        numericInput("simulation_duration",
+                     "Duration of the simulation (days):",
+                     min = 1,
+                     max = 21,
+                     value = 14
+        ),
+        numericInput("number_simulations",
+                     "Number of simulations:",
+                     min = 1,
+                     max = 50,
+                     value = 10
         )
       ),
       mainPanel(
-        plotOutput("growthPlot")
+        
       )
     )),
-    tabPanel("Event Time Distributions", sidebarLayout(position = "right",
+    tabPanel("Event Time Distributions",
+             sidebarLayout(position = "right",
         sidebarPanel(
             sliderInput("bins1",
                         "Number of bins 1:",
@@ -65,7 +99,9 @@ ui <- navbarPage(
     )),
     tabPanel("Information", includeMarkdown("info.md"))
 )
-# Define server logic required to draw a histogram
+
+
+## Define server logic required to draw a histogram
 server <- function(input, output) {
     output$growthPlot <- renderPlot(exp_growth(input$R, input$SI))
     output$distPlot1 <- renderPlot(old_faithful(input$bins1))
@@ -73,5 +109,5 @@ server <- function(input, output) {
     output$distPlot3 <- renderPlot(old_faithful(input$bins3))
 }
 
-# Run the application 
+## Run the application 
 shinyApp(ui = ui, server = server)
