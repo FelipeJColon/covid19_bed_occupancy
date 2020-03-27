@@ -50,10 +50,10 @@ return(tabPanel(tabtitle, sidebarLayout(position = "left",
     sliderInput(fmtr("uncertainty_doubling_time"), "Uncertainty in doubling time (%):",
       min = 0,
       max = 50,
-      value = 2,
+      value = 10,
       step = 1
     ),
-    numericInput(fmtr("simulation_duration"), "Forecast interval (days):",
+    numericInput(fmtr("simulation_duration"), "Forecast period (days):",
       min = 1,
       max = 21,
       value = 7,
@@ -65,18 +65,21 @@ return(tabPanel(tabtitle, sidebarLayout(position = "left",
       value = 10,
       step = 10
     ),
-    actionButton(fmtr("run"), "Run")
+    actionButton(fmtr("run"), "Run model", icon("play")), 
   ),
   mainPanel(
-    plotOutput(fmtr("main_plot")),
+    plotOutput(fmtr("main_plot"), width = "60%", height = "400px"),
     br(),
-    plotOutput(fmtr("los_plot")),
+    checkboxInput("show_los", "Show duration of hospitalisation", FALSE),
+    conditionalPanel(
+        condition = "input.show_los == true",
+        plotOutput(fmtr("los_plot"), width = "30%", height = "300px")),
     style="padding-bottom: 40px;"
-  )
+    )
 )))
 }
 
-## Define UI for application that draws a histogram
+## Define UI for application
 ui <- navbarPage(
   title = div(
     a(img(src="cmmid_newlogo.svg", height="45px"),
@@ -99,7 +102,7 @@ ui <- navbarPage(
                      includeMarkdown("include/info.md"))),
   tabPanel("Acknowledgements", 
            fluidPage(style="padding-left: 40px; padding-right: 40px; padding-bottom: 40px;", 
-                     includeMarkdown("ack.md")))
+                     includeMarkdown("include/ack.md")))
   
 
 )
@@ -121,7 +124,7 @@ server <- function(input, output) {
     date = input$gen_admission_date,
     n_start = as.integer(input$gen_number_admissions),
     doubling = input$gen_doubling_time,
-    doubling_error = input$gen_uncertainty_doubling_time/100,
+    doubling_error = input$gen_uncertainty_doubling_time / 100,
     duration = input$gen_simulation_duration,
     reporting = input$gen_assumed_reporting / 100,
     n_sim = input$gen_number_simulations,
@@ -132,7 +135,7 @@ server <- function(input, output) {
     date = input$icu_admission_date,
     n_start = as.integer(input$icu_number_admissions),
     doubling = input$icu_doubling_time,
-    doubling_error = input$icu_uncertainty_doubling_time/100,
+    doubling_error = input$icu_uncertainty_doubling_time / 100,
     duration = input$icu_simulation_duration,
     reporting = input$icu_assumed_reporting / 100,
     n_sim = input$icu_number_simulations,
