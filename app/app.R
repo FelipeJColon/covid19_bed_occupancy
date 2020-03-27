@@ -72,7 +72,7 @@ return(tabPanel(tabtitle, sidebarLayout(position = "left",
     br(),
     checkboxInput("show_los", "Show duration of hospitalisation", FALSE),
     conditionalPanel(
-        condition = "input.show_los == true",
+        condition = "input.show_los == TRUE",
         plotOutput(fmtr("los_plot"), width = "30%", height = "300px")),
     style="padding-bottom: 40px;"
     )
