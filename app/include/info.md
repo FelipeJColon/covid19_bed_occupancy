@@ -58,7 +58,7 @@ These distributions may not be appropriate in some settings, and the user should
 
 ## References
 
-Jombart Thibaut, et al. "The cost of insecurity: from flare-up to control of a major Ebola virus disease hotspot during the outbreak in the Democratic Republic of the Congo, 2019." _Eurosurveillance_, 2020; 25(2):pii=1900735. <a href="https://doi.org/10.2807/1560-7917.ES.2020.25.2.1900735">doi:10.2807/1560-7917.ES.2020.25.2.1900735</a> 
+Jombart, Thibaut, et al. "The cost of insecurity: from flare-up to control of a major Ebola virus disease hotspot during the outbreak in the Democratic Republic of the Congo, 2019." _Eurosurveillance_, 2020; 25(2):pii=1900735. <a href="https://doi.org/10.2807/1560-7917.ES.2020.25.2.1900735">doi:10.2807/1560-7917.ES.2020.25.2.1900735</a> 
 
 Zhou, Fei, et al. "Clinical Course and Risk Factors for Mortality of Adult Inpatients with COVID-19 in Wuhan, China: a Retrospective Cohort Study." _The Lancet_, 2020. <a href="https://doi.org/10.1016/s0140-6736(20)30566-3">doi:10.1016/s0140-6736(20)30566-3</a>.
 

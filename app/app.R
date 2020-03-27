@@ -20,6 +20,9 @@ library(ggplot2)
 
 ## global variables
 app_title   <- "Hospital Bed Occupancy Projections"
+# color choices
+cmmid_color <- "#0D5257"
+lshtm_grey  <- "#A7A8AA"
 
 admitsPanel <- function(
   prefix, tabtitle
@@ -101,35 +104,17 @@ ui <- navbarPage(
 
 )
 
-stay_distro_plot <- function(
-  distribution, main,
-  type = "h", col = cmmid_color,
-  lwd = 14, lend = 2,
-  xlab = "Days in hospital", ylab = "Probability",
-  cex.lab = 1.3, cex.main = 1.5
-) {
-  days <- 0:max(1, distribution$q(.999))
-  plot(
-    days, distribution$d(days),
-    main = main,
-    type = type, col = col,
-    lwd = lwd, lend = lend,
-    xlab = xlab, ylab = ylab,
-    cex.lab = cex.lab, cex.main = cex.main
-  )
-}
-
 ## Define server logic required to draw a histogram
 server <- function(input, output) {
   
   ## graphs for the distributions of length of hospital stay (LoS)
 
   output$gen_los_plot <- renderPlot(plot_distribution(
-    los_normal, "Duration of normal hospitalisation"
+    los_normal, "Duration of normal hospitalisation", fill_color = cmmid_color
   ), width = 600)
 
   output$icu_los_plot <- renderPlot(plot_distribution(
-    los_critical, "Duration of ICU hospitalisation"
+    los_critical, "Duration of ICU hospitalisation", fill_color = cmmid_color
   ), width = 600)
   
   genpars <- eventReactive(input$gen_run, list(
